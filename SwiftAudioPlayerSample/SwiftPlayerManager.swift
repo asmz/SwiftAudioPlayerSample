@@ -24,7 +24,7 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
         let audioPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sample", ofType: "mp3")!)
         
         // 音声ファイル情報読み込み
-        self.loadMetaDataFromAudioFile(audioPath)
+        self.loadMetaDataFromAudioFile(audioPath!)
         
         // プレイヤー準備
         player = AVAudioPlayer(contentsOfURL: audioPath, error: nil)
@@ -67,7 +67,7 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
     
     // MP3ファイルからメタデータ読み込み
     func loadMetaDataFromAudioFile(url : NSURL) {
-        let asset : AVAsset = AVURLAsset.URLAssetWithURL(url, options: nil)
+        let asset : AVAsset = AVURLAsset(URL:url, options: nil)
         let metadata : Array = asset.commonMetadata
         
         for item in metadata {
