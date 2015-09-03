@@ -24,10 +24,18 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
         let audioPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("sample", ofType: "mp3")!)
         
         // 音声ファイル情報読み込み
-        self.loadMetaDataFromAudioFile(audioPath!)
+        self.loadMetaDataFromAudioFile(audioPath)
         
-        // プレイヤー準備
-        player = AVAudioPlayer(contentsOfURL: audioPath, error: nil)
+        do {
+            // バックグラウンド再生
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            // プレイヤー準備
+            player = try AVAudioPlayer(contentsOfURL: audioPath)
+        } catch _ {
+            player = nil
+        }
         player.delegate = self
         player.enableRate = true    // 再生速度変更を有効化
         player.prepareToPlay()
@@ -45,7 +53,7 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
     }
     
     // 再生終了時処理
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         player.stop()
         
         // 再生終了を通知
@@ -71,24 +79,24 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
         let metadata : Array = asset.commonMetadata
         
         for item in metadata {
-            switch item.commonKey as String {
+            switch item.commonKey! as String {
             case AVMetadataCommonKeyTitle:
                 // タイトル取得
-                title = item.stringValue
+                title = item.stringValue!
             case AVMetadataCommonKeyAlbumName:
                 // アルバム名取得
-                album = item.stringValue
+                album = item.stringValue!
             case AVMetadataCommonKeyArtist:
                 // アーティスト名取得
-                artist = item.stringValue
+                artist = item.stringValue!
             case AVMetadataCommonKeyArtwork:
                 // アートワーク取得
                 if let artworkData = item.value as? NSDictionary {
                     // iOS7まではNSDirectory型が返却される
-                    artwork = UIImage(data:artworkData["data"] as NSData)
+                    artwork = UIImage(data:artworkData["data"] as! NSData)
                 } else {
                     // iOS8からはNSData型が返却される
-                    artwork = UIImage(data:item.dataValue)
+                    artwork = UIImage(data:item.dataValue!)
                 }
             default:
                 break

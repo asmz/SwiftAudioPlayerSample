@@ -4,7 +4,7 @@ Swift AVAudioPlayer Sample
 This is AVAudioPlayer class processing sample by Swift.
 
 ## Requirements
-Xcode 6.0 and Later.
+Xcode 9.0 beta 5 and Later.
 
 ## Usage
 

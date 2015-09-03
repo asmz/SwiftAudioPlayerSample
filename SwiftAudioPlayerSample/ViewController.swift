@@ -34,7 +34,7 @@ class ViewController: UIViewController {
             btnPlayPause!.setTitle("Pause", forState: UIControlState.Normal)
             
             // 再生時間監視タイマー開始
-            if (playingTimeTimer? == nil) {
+            if (playingTimeTimer == nil) {
                 playingTimeTimer = NSTimer.scheduledTimerWithTimeInterval(
                     1,
                     target: self,
