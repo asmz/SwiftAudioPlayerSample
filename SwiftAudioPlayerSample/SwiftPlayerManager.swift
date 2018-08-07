@@ -9,73 +9,62 @@
 import AVFoundation
 import UIKit
 
-class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
-    var player: AVAudioPlayer!         // プレイヤー
-    var title: String = ""             // タイトル
-    var artist: String = ""            // アーティスト
-    var album: String = ""             // アルバム
-    var artwork: UIImage? = nil        // アートワーク
-    
-    // 初期化処理
+class SwiftPlayerManager: NSObject {
+
+    // MARK: - Variables
+
+    var player: AVAudioPlayer!
+    var title: String = ""
+    var artist: String = ""
+    var album: String = ""
+    var artwork: UIImage? = nil
+
+    // MARK: - Constructor
+
     override init() {
         super.init()
         
-        // 音声ファイルパス取得
+        // Get audio file path
         let audioPath = URL(fileURLWithPath: Bundle.main.path(forResource: "sample", ofType: "mp3")!)
         
-        // 音声ファイル情報読み込み
+        // load audio file
         self.loadMetaDataFromAudioFile(audioPath)
         
         do {
-            // バックグラウンド再生
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
 
-            // プレイヤー準備
+            // Prepare player
             self.player = try AVAudioPlayer(contentsOf: audioPath)
         } catch _ {
-            print("Error")
-            return
+            fatalError("Initialization error.")
         }
 
         player.delegate = self
-        player.enableRate = true    // 再生速度変更を有効化
+        player.enableRate = true    // Enable playing rate change
         player.prepareToPlay()
     }
 
-    // 再生／一時停止処理
+    // MARK: - Internal methods
+
     func playOrPause() {
         if player.isPlaying {
-            // 現在再生中なら一時停止
             player.pause()
         } else {
-            // 現在再生していないなら再生
             player.play()
         }
     }
-    
-    // 再生終了時処理
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        player.stop()
-        
-        // 再生終了を通知
-        let notification = Notification(name: Notification.Name(rawValue: "stop"), object: self)
-        NotificationCenter.default.post(notification)
-    }
-    
-    // 再生速度変更
+
     func setRate(_ rate: Float) {
-        // 引数に設定された再生速度をプレイヤーに設定
         player.rate = rate
     }
     
-    // 再生位置変更
     func setPlayingTime(_ pos: Double) {
-        // 引数に設定された再生位置をプレイヤーに設定
         player.currentTime = pos
     }
-    
-    // MP3ファイルからメタデータ読み込み
+
+    // MARK: - Private methods
+
     func loadMetaDataFromAudioFile(_ url: URL) {
         let asset: AVAsset = AVURLAsset(url: url, options: nil)
         let metadata: Array = asset.commonMetadata
@@ -83,20 +72,28 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
         for item in metadata {
             switch item.commonKey {
             case AVMetadataKey.commonKeyTitle:
-                // タイトル取得
                 title = item.stringValue!
             case AVMetadataKey.commonKeyAlbumName:
-                // アルバム名取得
                 album = item.stringValue!
             case AVMetadataKey.commonKeyArtist:
-                // アーティスト名取得
                 artist = item.stringValue!
             case AVMetadataKey.commonKeyArtwork:
-                // アートワーク取得
                 artwork = UIImage(data: item.dataValue!)
             default:
                 break
             }
         }
     }
+}
+
+extension SwiftPlayerManager: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        player.stop()
+
+        // Send notification
+        let notification = Notification(name: Notification.Name(rawValue: "stop"), object: self)
+        NotificationCenter.default.post(notification)
+    }
+
 }
