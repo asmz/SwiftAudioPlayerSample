@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,17 +18,17 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="i2L-LF-p65">
-                                <rect key="frame" x="16" y="590" width="342.5" height="31"/>
+                                <rect key="frame" x="16" y="590" width="343" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <connections>
-                                    <action selector="sliderPlayingTimeAction" destination="vXZ-lx-hvc" eventType="valueChanged" id="UUY-RZ-a9p"/>
+                                    <action selector="didChangePlayingTimeSlider" destination="vXZ-lx-hvc" eventType="valueChanged" id="UUY-RZ-a9p"/>
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="5" id="PxQ-9h-6Lc">
                                 <rect key="frame" x="118" y="552" width="150" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <connections>
-                                    <action selector="sliderRateAction" destination="vXZ-lx-hvc" eventType="valueChanged" id="oTy-gX-1fe"/>
+                                    <action selector="didChangeRateSlider" destination="vXZ-lx-hvc" eventType="valueChanged" id="oTy-gX-1fe"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="再生速度：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fxT-0g-Ss3">
@@ -80,13 +81,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0ZB-eg-XYy">
-                                <rect key="frame" x="111.5" y="503" width="153" height="30"/>
+                                <rect key="frame" x="112" y="503" width="153" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <state key="normal" title="Play">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="btnPlayAction" destination="vXZ-lx-hvc" eventType="touchDown" id="tNz-Yg-fVL"/>
+                                    <action selector="didTapPlayPauseButton" destination="vXZ-lx-hvc" eventType="touchUpInside" id="D5H-7n-7KK"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アーティスト：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ohd-IZ-x5N">
@@ -111,23 +112,23 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="P8Y-3y-Q3e">
-                                <rect key="frame" x="87.5" y="182.5" width="200" height="200"/>
+                                <rect key="frame" x="88" y="182" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
-                        <outlet property="btnPlayPause" destination="0ZB-eg-XYy" id="qDG-iJ-kDg"/>
-                        <outlet property="imgArtwork" destination="P8Y-3y-Q3e" id="1JF-eg-rkL"/>
-                        <outlet property="labelAlbum" destination="r3H-Rg-6W1" id="p0C-lH-nmX"/>
-                        <outlet property="labelArtist" destination="rww-J0-yPg" id="5Z5-vP-MsX"/>
-                        <outlet property="labelPlayingTime" destination="KHD-rA-pQT" id="9sL-y3-5HO"/>
-                        <outlet property="labelRate" destination="kJx-59-l12" id="mAr-HH-GSW"/>
-                        <outlet property="labelTitle" destination="FSx-lD-huL" id="3qA-JQ-xft"/>
-                        <outlet property="labelTotalTime" destination="jl0-5e-ziJ" id="wQc-Y0-QFY"/>
-                        <outlet property="sliderPlayingTime" destination="i2L-LF-p65" id="Nfc-SZ-BQT"/>
-                        <outlet property="sliderRate" destination="PxQ-9h-6Lc" id="bmn-qF-AXM"/>
+                        <outlet property="albumLabel" destination="r3H-Rg-6W1" id="p0C-lH-nmX"/>
+                        <outlet property="artistLabel" destination="rww-J0-yPg" id="5Z5-vP-MsX"/>
+                        <outlet property="artworkImageView" destination="P8Y-3y-Q3e" id="1JF-eg-rkL"/>
+                        <outlet property="playPauseButton" destination="0ZB-eg-XYy" id="qDG-iJ-kDg"/>
+                        <outlet property="playingTimeLabel" destination="KHD-rA-pQT" id="9sL-y3-5HO"/>
+                        <outlet property="playingTimeSlider" destination="i2L-LF-p65" id="Nfc-SZ-BQT"/>
+                        <outlet property="rateLabel" destination="kJx-59-l12" id="mAr-HH-GSW"/>
+                        <outlet property="rateSlider" destination="PxQ-9h-6Lc" id="bmn-qF-AXM"/>
+                        <outlet property="titleLabel" destination="FSx-lD-huL" id="3qA-JQ-xft"/>
+                        <outlet property="totalTimeLabel" destination="jl0-5e-ziJ" id="wQc-Y0-QFY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -135,9 +136,4 @@
             <point key="canvasLocation" x="225" y="267"/>
         </scene>
     </scenes>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>
