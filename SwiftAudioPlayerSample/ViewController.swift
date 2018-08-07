@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     }
     
     // 再生終了通知検知時処理
-    func audioStopAction() {
+    @objc func audioStopAction() {
         // 「Play」表示に戻す
         btnPlayPause!.setTitle("Play", for: .normal)
         
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     }
     
     // 再生時間更新処理
-    func updatePlayingTime() {
+    @objc func updatePlayingTime() {
         // 再生中の時間を各コントロールに設定
         sliderPlayingTime!.value = Float(manager.player.currentTime)
         labelPlayingTime!.text = self.formatTimeString(manager.player.currentTime)

@@ -81,17 +81,17 @@ class SwiftPlayerManager: NSObject, AVAudioPlayerDelegate {
         let metadata: Array = asset.commonMetadata
         
         for item in metadata {
-            switch item.commonKey! as String {
-            case AVMetadataCommonKeyTitle:
+            switch item.commonKey {
+            case AVMetadataKey.commonKeyTitle:
                 // タイトル取得
                 title = item.stringValue!
-            case AVMetadataCommonKeyAlbumName:
+            case AVMetadataKey.commonKeyAlbumName:
                 // アルバム名取得
                 album = item.stringValue!
-            case AVMetadataCommonKeyArtist:
+            case AVMetadataKey.commonKeyArtist:
                 // アーティスト名取得
                 artist = item.stringValue!
-            case AVMetadataCommonKeyArtwork:
+            case AVMetadataKey.commonKeyArtwork:
                 // アートワーク取得
                 artwork = UIImage(data: item.dataValue!)
             default:
